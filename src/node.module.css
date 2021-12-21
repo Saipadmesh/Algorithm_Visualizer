@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap");
+
+.grid_container {
+  display: grid;
+  column-gap: 4rem;
+  row-gap: 10px;
+  grid-auto-flow: column;
+  grid-template-columns: 70rem auto;
+  grid-template-rows: 20rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+
+.graph_grid {
+  grid-row: 1/ 2;
+  grid-column: 1/2;
+}
+.graph_grid_item {
+  height: 40rem;
+  width: auto;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px 4px #969696;
+  -webkit-box-shadow: 4px 3px 8px 1px #969696;
+  background-color: white;
+}
+.item1 {
+  grid-row: 1;
+  grid-column: 2;
+}
+.item2 {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.App {
+  margin: 0px 6rem;
+  background-color: #f1f0ee;
+  height: 100vh;
+  padding: 1rem 1rem;
+}
+
+body {
+  background-color: #262424;
+  height: max-content;
+  margin: 0%;
+}
+
+.gradient_border {
+  --borderWidth: 3px;
+  position: relative;
+  border-radius: var(--borderWidth);
+}
+.gradient_border:after {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(
+    60deg,
+    #f79533,
+    #f37055,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+  border-radius: calc(2 * var(--borderWidth));
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+@keyframes animatedgradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

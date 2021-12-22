@@ -72,7 +72,7 @@ const CreateRelationship = (props) => {
       setError(true);
     } else {
       var toSend = { node1: selectedNode1, node2: selectedNode2 };
-      fetch("/delcon", {
+      /*fetch("/delcon", {
         "method": "POST",
 
         headers: {
@@ -95,7 +95,7 @@ const CreateRelationship = (props) => {
         })
         .catch((error) => {
           console.log(error);
-        });
+        });*/
     }
   };
 

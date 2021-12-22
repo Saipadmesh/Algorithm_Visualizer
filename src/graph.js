@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { ResponsiveNetwork } from "@nivo/network";
+import Sigma from "sigma";
+import Graph from "graphology";
 
 const DrawGraph = (props) => {
   const [data, setData] = useState({});
@@ -13,8 +14,6 @@ const DrawGraph = (props) => {
           "radius": 11,
           "depth": 0.5,
           "name": node.name,
-          "age": node.age,
-          "followers": node.followers,
         };
       });
     }
@@ -34,35 +33,12 @@ const DrawGraph = (props) => {
     //console.log(data.links);
   }, [props.nodelist, props.rellist]);
 
-  return (
-    <ResponsiveNetwork
-      nodes={data.nodes}
-      links={data.links}
-      margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      repulsivity={60}
-      iterations={60}
-      nodeColor={function (e) {
-        return e.color;
-      }}
-      nodeBorderWidth={1}
-      nodeBorderColor={{ from: "color", modifiers: [["darker", 0.8]] }}
-      linkThickness={function (e) {
-        return 2 * (2 - e.source.depth);
-      }}
-      linkColor={{ theme: "grid.line.stroke" }}
-      linkDistance={60}
-      motionStiffness={160}
-      motionDamping={12}
-      tooltip={(input) => {
-        return (
-          <div>
-            <b>Name: </b> {input.id} <br /> <b>Age: </b> {input.age} <br />
-            <b>Followers: </b> {input.followers}
-          </div>
-        );
-      }}
-    />
-  );
+  //Sigma
+  graphRef = React.createRef();
+  const renderer = new Sigma(data, graphRef);
+  const camera = renderer.getCamera();
+
+  return <div ref={graphRef}></div>;
 };
 
 export default DrawGraph;

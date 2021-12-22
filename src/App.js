@@ -1,11 +1,14 @@
 import CreateNode from "./createNode";
 import CreateRelationship from "./createRelationship";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from "./node.module.css";
+import DisplayGrid from "./sorting";
+import React from "react";
+import Graph from "./p5_base";
 const WAIT_TIME = 2000;
 
 function App() {
-  const [nodeList, setNodeList] = useState([]);
+  /*const [nodeList, setNodeList] = useState([]);
   const [relList, setRelList] = useState([]);
   // useEffect for refreshing node list
 
@@ -22,8 +25,6 @@ function App() {
           return {
             "id": node.id,
             "name": node.name,
-            "age": node.age,
-            "followers": node.followers + 1,
           };
         } else {
           return node;
@@ -48,31 +49,15 @@ function App() {
           return {
             "id": node.id,
             "name": node.name,
-            "age": node.age,
-            "followers": node.followers - 1,
           };
         } else {
           return node;
         }
       })
     );
-  }
+  }*/
 
-  return (
-    <body className={styles.doc}>
-      <div className={styles.App}>
-        <header className="App-header"></header>
-        <h1
-          style={{
-            margin: 10,
-            fontFamily: "'Fjalla One', sans-serif",
-            fontSize: 60,
-          }}
-        >
-          Graph Visualizer
-        </h1>
-        <br />
-        <div className={styles.grid_container}>
+  /* <div className={styles.grid_container}>
           <div className={styles.graph_grid}>
             <div className={styles.graph_grid_item}></div>
           </div>
@@ -88,7 +73,23 @@ function App() {
               onDelete={handleDelRelationships}
             />
           </div>
-        </div>
+        </div>*/
+
+  return (
+    <body className={styles.doc}>
+      <div className={styles.App}>
+        <header className="App-header"></header>
+        <h1
+          style={{
+            margin: 10,
+            fontFamily: "'Fjalla One', sans-serif",
+            fontSize: 60,
+          }}
+        >
+          Algorithm Visualizer
+        </h1>
+        <br />
+        <DisplayGrid />
       </div>
     </body>
   );

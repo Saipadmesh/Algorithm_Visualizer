@@ -45,7 +45,6 @@ const CreateNode = (props) => {
       }
     }
 
-    inputs.age = Number(inputs.age);
     var toSend = { "node": inputs };
     /*fetch("/addnode", {
       "method": "POST",
@@ -92,18 +91,7 @@ const CreateNode = (props) => {
           />
           {checkName && <FormHelperText>Name already exists</FormHelperText>}
         </FormControl>
-        <br />
-        <FormControl sx={{ m: 1, width: "10ch" }}>
-          <TextField
-            required
-            label="Age"
-            name="age"
-            inputRef={text2}
-            value={inputs.age || ""}
-            onChange={handleChange}
-            variant="standard"
-          />
-        </FormControl>
+
         <br />
         <FormControl sx={{ m: 1 }}>
           <OrangeButton variant="contained" type="submit">

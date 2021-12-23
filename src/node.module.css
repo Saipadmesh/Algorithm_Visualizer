@@ -5,7 +5,7 @@
   column-gap: 4rem;
   row-gap: 10px;
   grid-auto-flow: column;
-  grid-template-columns: 70rem auto;
+  grid-template-columns: 65vw auto;
   grid-template-rows: 20rem;
   margin-left: 4rem;
   margin-right: 4rem;
@@ -35,7 +35,7 @@
 }
 
 .App {
-  margin: 0px 6rem;
+  margin: 0px 5vw;
   background-color: #f1f0ee;
   height: 100vh;
   padding: 1rem 1rem;

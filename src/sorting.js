@@ -7,9 +7,9 @@ import Sketch from "react-p5";
 import { OrangeButton } from "./muiCustomStyle";
 
 const useToggle = (initialState) => {
-  const [isToggled, setIsToggled] = React.useState(initialState);
+  const [isToggled, setIsToggled] = useState(initialState);
 
-  const toggle = React.useCallback(
+  const toggle = useCallback(
     () => setIsToggled((state) => !state),
     [setIsToggled]
   );
@@ -28,6 +28,8 @@ const DisplayGrid = () => {
   const [p5, setP5] = useState();
 
   const [bubble, setBubble] = useToggle(false);
+  const [insert, setInsert] = useToggle(false);
+  const [select, setSelect] = useToggle(false);
   const [quick, setQuick] = useToggle(false);
   const [mergeS, setMerge] = useToggle(false);
   const [common, setCommon] = useToggle(false);
@@ -50,27 +52,42 @@ const DisplayGrid = () => {
   // DRAW INSIDE CANVAS, DEFAULT ON LOOP
   let draw = (p5) => {
     p5.background(200);
-    if (bubble == true) {
-      if (common == false) {
+    if (bubble === true) {
+      if (common === false) {
         setCommon();
       }
       bubbleSort();
     }
-
-    if (common == false && quick == true) {
+    if (common === false && insert === true) {
       setCommon();
-      p5.noLoop();
-      quickSort(0, values.length - 1);
-      setQuick();
-      p5.loop();
+      //p5.noLoop();
+      insertionSort();
+      setInsert();
+      //p5.loop();
     }
 
-    if (common == false && mergeS == true) {
+    if (common === false && select === true) {
+      setCommon();
+      //p5.noLoop();
+      selectionSort();
+      setSelect();
+      //p5.loop();
+    }
+
+    if (common === false && quick === true) {
+      setCommon();
+      //p5.noLoop();
+      quickSort(0, values.length - 1);
+      setQuick();
+      //p5.noLoop();
+    }
+
+    if (common === false && mergeS === true) {
       setCommon();
       //p5.noLoop();
       mergeSort(0, values.length - 1);
       setMerge();
-      p5.loop();
+      //p5.loop();
     }
     simulateSorting();
   };
@@ -83,17 +100,28 @@ const DisplayGrid = () => {
       for (let i = 0; i < p5.width / 8; i++) {
         values1.push(Math.random(p5.height) * p5.height);
       }
+      i = 0;
+      j = 0;
       setStatus(status1);
-      if (common == true) {
+      if (common === true) {
         setCommon();
       }
       setValues(values1);
 
-      if (bubble == true) {
+      if (bubble === true) {
         setBubble();
       }
-      if (quick == true) {
+      if (insert === true) {
+        setInsert();
+      }
+      if (select === true) {
+        setSelect();
+      }
+      if (quick === true) {
         setQuick();
+      }
+      if (mergeS === true) {
+        setMerge();
       }
     }
   }
@@ -110,12 +138,12 @@ const DisplayGrid = () => {
           values[j + 1] = temp;
         }
 
-        status[j] = -1;
+        status[j] = 0;
         j++;
         status[j] = 1;
 
         if (j >= values.length - i - 1) {
-          status[j] = 0;
+          status[j] = -1;
 
           j = 0;
           i++;
@@ -128,6 +156,55 @@ const DisplayGrid = () => {
     }
   }
 
+  async function insertionSort() {
+    for (let i = 1; i < values.length; i++) {
+      let key = values[i];
+      j = i - 1;
+
+      while (j >= 0 && values[j] > key) {
+        status[i] = 0;
+        status[j] = 1;
+        await sleep(8);
+        values[j + 1] = values[j];
+        j = j - 1;
+        status[j + 1] = -1;
+      }
+
+      values[j + 1] = key;
+    }
+    status[values.length - 1] = -1;
+    p5.noLoop();
+  }
+
+  async function selectionSort() {
+    if (p5) {
+      for (let i = 0; i < values.length - 1; i++) {
+        let min_idx = i;
+        status[i] = 0;
+        for (let j = i + 1; j < values.length; j++) {
+          status[j] = 1;
+        }
+        for (let j = i + 1; j < values.length; j++) {
+          if (values[j] < values[min_idx]) {
+            //status[i] = -1;
+            min_idx = j;
+            //status[j] = 0;
+          }
+          //await sleep(5);
+        }
+        await sleep(60);
+        /*let temp = values[min_idx];
+        values[min_idx] = values[i];
+        values[i] = temp;*/
+        //status[min_idx] = -1;
+        await swap(min_idx, i);
+        status[i] = -1;
+      }
+      status[values.length - 1] = -1;
+      //p5.noLoop();
+    }
+  }
+
   async function quickSort(start, end) {
     if (start > end) {
       return;
@@ -135,8 +212,9 @@ const DisplayGrid = () => {
 
     let index = await partition(start, end);
     // restore original state
-    status[index] = 0;
+    //status[index] = 0;
     await Promise.all([quickSort(start, index - 1), quickSort(index + 1, end)]);
+    //status[index] = -1;
   }
 
   async function partition(start, end) {
@@ -147,20 +225,20 @@ const DisplayGrid = () => {
     // Quicksort algorithm
     let pivotIndex = start;
     // make pivot index distinct
-    status[pivotIndex] = 0;
+    status[pivotIndex] = -1;
     let pivotElement = values[end];
     for (let i = start; i < end; i++) {
       if (values[i] < pivotElement) {
         await swap(i, pivotIndex);
-        status[pivotIndex] = -1;
-        pivotIndex++;
         status[pivotIndex] = 0;
+        pivotIndex++;
+        status[pivotIndex] = -1;
       }
     }
     await swap(end, pivotIndex);
     for (let i = start; i < end; i++) {
       // restore original state
-      if (i != pivotIndex) {
+      if (i !== pivotIndex) {
         status[i] = -1;
       }
     }
@@ -171,7 +249,7 @@ const DisplayGrid = () => {
   async function swap(i, j) {
     // adjust the pace of the simulation by changing the
     // value
-    await sleep(25);
+    await sleep(40);
     let temp = values[i];
     values[i] = values[j];
     values[j] = temp;
@@ -299,9 +377,9 @@ const DisplayGrid = () => {
       //console.log("inside simulateSort", status);
       for (let i = 0; i < values.length; i++) {
         p5.stroke(252, 136, 12);
-        if (status[i] == 0) {
+        if (status[i] === 0) {
           p5.fill(139, 69, 19);
-        } else if (status[i] == 1) {
+        } else if (status[i] === 1) {
           p5.fill(255, 215, 0);
         } else {
           p5.fill(50);
@@ -341,7 +419,7 @@ const DisplayGrid = () => {
           <br />
           <OrangeButton
             onClick={() => {
-              if (common == false) {
+              if (common === false) {
                 setBubble();
               }
             }}
@@ -352,7 +430,29 @@ const DisplayGrid = () => {
           <br />
           <OrangeButton
             onClick={() => {
-              if (common == false) {
+              if (common === false) {
+                setInsert();
+              }
+            }}
+          >
+            Insertion Sort
+          </OrangeButton>
+          <br />
+          <br />
+          <OrangeButton
+            onClick={() => {
+              if (common === false) {
+                setSelect();
+              }
+            }}
+          >
+            Selection Sort
+          </OrangeButton>
+          <br />
+          <br />
+          <OrangeButton
+            onClick={() => {
+              if (common === false) {
                 setQuick();
               }
             }}
@@ -363,7 +463,7 @@ const DisplayGrid = () => {
           <br />
           <OrangeButton
             onClick={() => {
-              if (common == false) {
+              if (common === false) {
                 setMerge();
               }
             }}

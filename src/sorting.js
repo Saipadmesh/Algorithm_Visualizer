@@ -1,6 +1,4 @@
 import { useEffect, useState, useCallback } from "react";
-import CreateNode from "./createNode";
-import CreateRelationship from "./createRelationship";
 import React from "react";
 import styles from "./node.module.css";
 import Sketch from "react-p5";
@@ -17,7 +15,8 @@ const useToggle = (initialState) => {
   return [isToggled, toggle];
 };
 
-const DisplayGrid = () => {
+const DisplayGraph = () => {
+  const [p5, setP5] = useState();
   const [values, setValues] = useState([]);
   const [status, setStatus] = useState([]);
   let i = 0;
@@ -25,7 +24,6 @@ const DisplayGrid = () => {
 
   const [gheight, setgHeight] = useState(0);
   const [gwidth, setgWidth] = useState(0);
-  const [p5, setP5] = useState();
 
   const [bubble, setBubble] = useToggle(false);
   const [insert, setInsert] = useToggle(false);
@@ -33,7 +31,7 @@ const DisplayGrid = () => {
   const [quick, setQuick] = useToggle(false);
   const [mergeS, setMerge] = useToggle(false);
   const [common, setCommon] = useToggle(false);
-  useEffect(() => console.log(common), [common]);
+  //useEffect(() => console.log(common), [common]);
   // SETUP CANVAS
   let setup = (p5, canvasParentRef) => {
     setP5(p5);
@@ -476,4 +474,4 @@ const DisplayGrid = () => {
   );
 };
 
-export default DisplayGrid;
+export default DisplayGraph;

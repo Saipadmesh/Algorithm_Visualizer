@@ -1,79 +1,60 @@
-import CreateNode from "./createNode";
-import CreateRelationship from "./createRelationship";
-import { useState, useEffect, useCallback } from "react";
 import styles from "./node.module.css";
-import DisplayGrid from "./sorting";
-import React from "react";
-import Graph from "./p5_base";
+import DisplayGraph from "./sorting";
+import DisplayGrid from "./pathfinding";
+import { useState, useCallback, useEffect } from "react";
+
 const WAIT_TIME = 2000;
 
+const useToggle = (initialState) => {
+  const [isToggled, setIsToggled] = useState(initialState);
+
+  const toggle = useCallback(
+    () => setIsToggled((state) => !state),
+    [setIsToggled]
+  );
+
+  return [isToggled, toggle];
+};
 function App() {
-  /*const [nodeList, setNodeList] = useState([]);
-  const [relList, setRelList] = useState([]);
-  // useEffect for refreshing node list
+  const [columns, setColumns] = useState(56);
+  const [rows, setRows] = useState(32);
 
-  function handleChangeNodes(newValue) {
-    setNodeList(nodeList.concat(newValue));
-    //console.log(nodeList);
+  const [board, setBoard] = useState([]);
+
+  useEffect(() => {
+    if (rows !== 0 || columns !== 0) {
+      console.log("Board reset", columns, rows);
+      resetBoard();
+    }
+  }, [rows, columns]);
+
+  useEffect(() => {
+    console.log(board);
+  }, [board]);
+  function handleChangeSize(r, c) {
+    setRows(r);
+    setColumns(c);
+
+    //console.log("inside handleChangeSize", columns, rows);
   }
-
-  function handleChangeRelationships(newValue) {
-    setRelList(relList.concat([newValue]));
-    setNodeList(
-      nodeList.map((node) => {
-        if (node.name === newValue[0] || node.name === newValue[1]) {
-          return {
-            "id": node.id,
-            "name": node.name,
-          };
-        } else {
-          return node;
+  function resetBoard() {
+    if (rows !== 0 || columns !== 0) {
+      //console.log("resetBoard fn", columns, rows);
+      let board1 = new Array(columns);
+      for (let i = 0; i < columns; i++) {
+        board1[i] = [1];
+        for (let j = 0; j < rows - 2; j++) {
+          if (i === 0 || i === columns - 1) {
+            board1[i].push(1);
+          } else {
+            board1[i].push(0);
+          }
         }
-      })
-    );
-    //console.log(relList);
+        board1[i].push(1);
+      }
+      setBoard(board1);
+    }
   }
-
-  function handleDelRelationships(newValue) {
-    //console.log(newValue);
-    let filtered = [];
-    filtered = relList.filter((arr) => {
-      return arr.indexOf(newValue[0]) < 0 || arr.indexOf(newValue[1]) < 0;
-    });
-    //console.log(filtered);
-    setRelList(filtered);
-    setNodeList(
-      nodeList.map((node) => {
-        if (node.name === newValue[0] || node.name === newValue[1]) {
-          //console.log(node.name);
-          return {
-            "id": node.id,
-            "name": node.name,
-          };
-        } else {
-          return node;
-        }
-      })
-    );
-  }*/
-
-  /* <div className={styles.grid_container}>
-          <div className={styles.graph_grid}>
-            <div className={styles.graph_grid_item}></div>
-          </div>
-
-          <div className={styles.item1}>
-            <CreateNode nodes={nodeList} onChange={handleChangeNodes} />
-          </div>
-          <div className={styles.item2}>
-            <CreateRelationship
-              nodes={nodeList}
-              relationships={relList}
-              onChange={handleChangeRelationships}
-              onDelete={handleDelRelationships}
-            />
-          </div>
-        </div>*/
 
   return (
     <body className={styles.doc}>
@@ -89,7 +70,31 @@ function App() {
           Algorithm Visualizer
         </h1>
         <br />
-        <DisplayGrid />
+        <DisplayGraph />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <DisplayGrid
+          board={board}
+          onChangeSize={handleChangeSize}
+          columns={columns}
+          rows={rows}
+          setBoard={setBoard}
+        />
       </div>
     </body>
   );

@@ -5,10 +5,11 @@
   column-gap: 4rem;
   row-gap: 10px;
   grid-auto-flow: column;
-  grid-template-columns: 65vw auto;
+  grid-template-columns: 79.69% auto;
   grid-template-rows: 20rem;
   margin-left: 4rem;
   margin-right: 4rem;
+  margin: 4rem 4rem;
 }
 
 .graph_grid {
@@ -37,7 +38,7 @@
 .App {
   margin: 0px 5vw;
   background-color: #f1f0ee;
-  height: 100vh;
+  height: 250vh;
   padding: 1rem 1rem;
 }
 

@@ -1,8 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import React from "react";
 import styles from "./node.module.css";
 import Sketch from "react-p5";
-import { OrangeButton } from "./muiCustomStyle";
+import reseticon from "./images/reseticon.png";
 
 const useToggle = (initialState) => {
   const [isToggled, setIsToggled] = useState(initialState);
@@ -43,13 +43,13 @@ const DisplayGraph = () => {
       status1.push(-1);
     }
     setStatus(status1);
-    //console.log("Status", status);
 
     //setValues(values1);
   };
   // DRAW INSIDE CANVAS, DEFAULT ON LOOP
   let draw = (p5) => {
-    p5.background(200);
+    // Background of the canvas
+    p5.background(247, 253, 255);
     if (bubble === true) {
       if (common === false) {
         setCommon();
@@ -264,17 +264,8 @@ const DisplayGraph = () => {
     var n = values.length;
     var curr_size;
 
-    // For picking starting index of
-    // left subarray to be merged
     var left_start;
 
-    // Merge subarrays in bottom up
-    // manner. First merge subarrays
-    // of size 1 to create sorted
-    // subarrays of size 2, then merge
-    // subarrays of size 2 to create
-    // sorted subarrays of size 4, and
-    // so on.
     for (curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size) {
       // Pick starting povar of different
       // subarrays of current size
@@ -307,26 +298,18 @@ const DisplayGraph = () => {
 
     for (var i = 0; i < subArray1len; i++) {
       L[i] = values[start + i];
-      //status[start + i] = 1;
       await sleep(15);
-      //status[start + i] = 1;
-      //await swap(L[i], values[start + i]);
     }
 
     for (var j = 0; j < subArray2len; j++) {
       R[j] = values[mid + 1 + j];
       await sleep(15);
-      //status[mid + 1 + j] = 1;
-      //await swap(R[j], values[mid + 1 + j]);
     }
     var i = 0;
     var j = 0;
     var k = start;
 
     while (i < subArray1len && j < subArray2len) {
-      //status[i] = -1;
-      //status[j] = -1;
-
       if (L[i] <= R[j]) {
         status[k] = -1;
         values[k] = L[i];
@@ -338,8 +321,6 @@ const DisplayGraph = () => {
         await sleep(15);
         j++;
       }
-      // status[i] = 1;
-      // status[j] = 1;
 
       //await sleep(20);
       k++;
@@ -376,9 +357,9 @@ const DisplayGraph = () => {
       for (let i = 0; i < values.length; i++) {
         p5.stroke(252, 136, 12);
         if (status[i] === 0) {
-          p5.fill(139, 69, 19);
+          p5.fill(141, 66, 1);
         } else if (status[i] === 1) {
-          p5.fill(255, 215, 0);
+          p5.fill(249, 186, 50);
         } else {
           p5.fill(50);
         }
@@ -403,19 +384,26 @@ const DisplayGraph = () => {
             </div>
           </div>
         </div>
+        <button
+          type="button"
+          class={styles.ResetButton}
+          onClick={() => {
+            p5.loop();
+            initialize();
+          }}
+        >
+          <img src={reseticon} />
+        </button>
 
         <div className={styles.item1}>
-          <OrangeButton
-            onClick={() => {
-              p5.loop();
-              initialize();
-            }}
-          >
-            Reset
-          </OrangeButton>
+          <h1 style={{ paddingLeft: 10, fontWeight: 400 }}>Sort Types</h1>
+
+          <div className={styles.line1}></div>
           <br />
           <br />
-          <OrangeButton
+          <button
+            type="button"
+            class={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setBubble();
@@ -423,10 +411,12 @@ const DisplayGraph = () => {
             }}
           >
             Bubble Sort
-          </OrangeButton>
+          </button>
           <br />
           <br />
-          <OrangeButton
+          <button
+            type="button"
+            class={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setInsert();
@@ -434,10 +424,12 @@ const DisplayGraph = () => {
             }}
           >
             Insertion Sort
-          </OrangeButton>
+          </button>
           <br />
           <br />
-          <OrangeButton
+          <button
+            type="button"
+            class={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setSelect();
@@ -445,10 +437,12 @@ const DisplayGraph = () => {
             }}
           >
             Selection Sort
-          </OrangeButton>
+          </button>
           <br />
           <br />
-          <OrangeButton
+          <button
+            type="button"
+            class={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setQuick();
@@ -456,10 +450,12 @@ const DisplayGraph = () => {
             }}
           >
             Quick Sort
-          </OrangeButton>
+          </button>
           <br />
           <br />
-          <OrangeButton
+          <button
+            type="button"
+            class={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setMerge();
@@ -467,7 +463,7 @@ const DisplayGraph = () => {
             }}
           >
             Merge Sort
-          </OrangeButton>
+          </button>
         </div>
       </div>
     </>

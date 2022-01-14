@@ -285,21 +285,21 @@ const DisplayGraph = () => {
       R[j] = values[mid + 1 + j];
       await sleep(15);
     }
-    var i1 = 0;
-    var j1 = 0;
+    var i = 0;
+    var j = 0;
     var k = start;
 
-    while (i1 < subArray1len && j1 < subArray2len) {
-      if (L[i1] <= R[j1]) {
+    while (i < subArray1len && j < subArray2len) {
+      if (L[i] <= R[j]) {
         status[k] = -1;
         values[k] = L[i];
         await sleep(15);
-        i1++;
+        i++;
       } else {
         status[k] = -1;
-        values[k] = R[j1];
+        values[k] = R[j];
         await sleep(15);
-        j1++;
+        j++;
       }
 
       k++;

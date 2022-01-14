@@ -68,7 +68,7 @@
 .footer {
   position: relative;
   width: 94vw;
-  top: 30vh;
+  top: 40vh;
 
   z-index: 9;
   justify-items: center;
@@ -159,7 +159,7 @@ body::-webkit-scrollbar {
   transition-duration: 0.5s;
   border-width: 0px;
   position: absolute;
-  top: 94vh;
+  top: 96vh;
   left: 72vw;
   z-index: 3;
 }

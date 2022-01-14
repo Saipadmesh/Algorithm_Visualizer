@@ -285,21 +285,21 @@ const DisplayGraph = () => {
       R[j] = values[mid + 1 + j];
       await sleep(15);
     }
-    var i = 0;
-    var j = 0;
+    var i1 = 0;
+    var j1 = 0;
     var k = start;
 
-    while (i < subArray1len && j < subArray2len) {
-      if (L[i] <= R[j]) {
+    while (i1 < subArray1len && j1 < subArray2len) {
+      if (L[i1] <= R[j1]) {
         status[k] = -1;
         values[k] = L[i];
         await sleep(15);
-        i++;
+        i1++;
       } else {
         status[k] = -1;
-        values[k] = R[j];
+        values[k] = R[j1];
         await sleep(15);
-        j++;
+        j1++;
       }
 
       k++;
@@ -363,7 +363,7 @@ const DisplayGraph = () => {
             initialize();
           }}
         >
-          <img src={reseticon} />
+          <img src={reseticon} alt="" />
         </button>
 
         <div className={styles.item1}>

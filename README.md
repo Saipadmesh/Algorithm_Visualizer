@@ -1,4 +1,4 @@
-## Algorithm Visualizer
+# Algorithm Visualizer
 
 A web application to visualize and understand how basic sorting algorithms work. This application is built using ReactJs and P5js.
 
@@ -6,3 +6,4 @@ A web application to visualize and understand how basic sorting algorithms work.
 
 - Implement more algorithms
 - Make the webpage more responsive
+- Add a slider to control the speed of the algorithms

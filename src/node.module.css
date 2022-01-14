@@ -7,7 +7,7 @@
   column-gap: 0rem;
   row-gap: 10px;
   grid-auto-flow: column;
-  grid-template-columns: 80.9% auto;
+  grid-template-columns: 69.7vw auto;
   grid-template-rows: 20rem;
   margin-left: 4rem;
   margin-right: 4rem;
@@ -59,7 +59,7 @@
   width: 94vw;
   height: 2vw;
   bottom: 0;
-  margin-top: 12.5vw;
+  margin-top: 19vh;
   z-index: 0;
   left: 0;
   float: left;
@@ -68,7 +68,7 @@
 .footer {
   position: relative;
   width: 94vw;
-  top: 17vw;
+  top: 18vw;
 
   z-index: 9;
   justify-items: center;
@@ -161,6 +161,7 @@ body::-webkit-scrollbar {
   position: absolute;
   top: 86vh;
   left: 72vw;
+  z-index: 3;
 }
 
 .ResetButton:hover {

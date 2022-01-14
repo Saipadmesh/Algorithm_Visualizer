@@ -69,8 +69,21 @@ function App() {
             <a href="https://linktr.ee/Saipadmesh" target="_blank">
               @Saipadmesh
             </a>
+            <br />
+            <br />
+            Source Code available on{" "}
+            <a
+              href="https://github.com/Saipadmesh/Algorithm_Visualizer"
+              target="_blank"
+            >
+              GitHub
+            </a>
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 300"
+            style={{ zIndex: 0 }}
+          >
             <path
               fill="#426E86"
               fillOpacity="1"

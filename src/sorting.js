@@ -31,20 +31,17 @@ const DisplayGraph = () => {
   const [quick, setQuick] = useToggle(false);
   const [mergeS, setMerge] = useToggle(false);
   const [common, setCommon] = useToggle(false);
-  //useEffect(() => console.log(common), [common]);
   // SETUP CANVAS
   let setup = (p5, canvasParentRef) => {
     setP5(p5);
     p5.createCanvas(gwidth, gheight).parent(canvasParentRef);
-    //let values1 = [];
+
     let status1 = [];
     for (let i = 0; i < p5.width / 8; i++) {
       values.push(Math.random(p5.height) * p5.height);
       status1.push(-1);
     }
     setStatus(status1);
-
-    //setValues(values1);
   };
   // DRAW INSIDE CANVAS, DEFAULT ON LOOP
   let draw = (p5) => {
@@ -179,22 +176,17 @@ const DisplayGraph = () => {
       for (let i = 0; i < values.length - 1; i++) {
         let min_idx = i;
         status[i] = 0;
+
         for (let j = i + 1; j < values.length; j++) {
           status[j] = 1;
-        }
-        for (let j = i + 1; j < values.length; j++) {
           if (values[j] < values[min_idx]) {
-            //status[i] = -1;
             min_idx = j;
-            //status[j] = 0;
           }
-          //await sleep(5);
+          await sleep(1);
+          status[j] = -1;
         }
-        await sleep(60);
-        /*let temp = values[min_idx];
-        values[min_idx] = values[i];
-        values[i] = temp;*/
-        //status[min_idx] = -1;
+        await sleep(30);
+
         await swap(min_idx, i);
         status[i] = -1;
       }
@@ -210,9 +202,7 @@ const DisplayGraph = () => {
 
     let index = await partition(start, end);
     // restore original state
-    //status[index] = 0;
     await Promise.all([quickSort(start, index - 1), quickSort(index + 1, end)]);
-    //status[index] = -1;
   }
 
   async function partition(start, end) {
@@ -252,7 +242,7 @@ const DisplayGraph = () => {
     values[i] = values[j];
     values[j] = temp;
   }
-
+  // HELPER FUNCTION TO SLOW SIMULATION
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -267,12 +257,7 @@ const DisplayGraph = () => {
     var left_start;
 
     for (curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size) {
-      // Pick starting povar of different
-      // subarrays of current size
       for (left_start = 0; left_start < n - 1; left_start += 2 * curr_size) {
-        // Find ending power of left
-        // subarray. mid+1 is starting
-        // power of right
         var right_end = Math.min(left_start + 2 * curr_size - 1, n - 1);
         for (let i = left_start; i < right_end; i++) {
           // identify the elements being considered currently
@@ -280,16 +265,11 @@ const DisplayGraph = () => {
         }
         var mid = Math.min(left_start + curr_size - 1, n - 1);
         status[mid] = 0;
-
-        // Merge Subarrays arr[left_start...mid]
-        // & arr[mid+1...right_end]
         await merge(left_start, mid, right_end);
       }
     }
     status[values.length - 1] = -1;
-    //console.log(values);
   }
-  // compare the lists element by element and return the concatenated resultList
   async function merge(start, mid, end) {
     var subArray1len = mid - start + 1;
     var subArray2len = end - mid;
@@ -322,7 +302,6 @@ const DisplayGraph = () => {
         j++;
       }
 
-      //await sleep(20);
       k++;
     }
 
@@ -341,25 +320,17 @@ const DisplayGraph = () => {
       j++;
       k++;
     }
-
-    /*for (let i = start; i <= end; i++) {
-      {
-        status[i] = -1;
-        await sleep(10);
-      }
-    }*/
   }
 
   // DRAW GRAPH ON CANVAS
   function simulateSorting() {
     if (p5) {
-      //console.log("inside simulateSort", status);
       for (let i = 0; i < values.length; i++) {
         p5.stroke(252, 136, 12);
         if (status[i] === 0) {
           p5.fill(141, 66, 1);
         } else if (status[i] === 1) {
-          p5.fill(249, 186, 50);
+          p5.fill(254, 172, 36);
         } else {
           p5.fill(50);
         }
@@ -386,7 +357,7 @@ const DisplayGraph = () => {
         </div>
         <button
           type="button"
-          class={styles.ResetButton}
+          className={styles.ResetButton}
           onClick={() => {
             p5.loop();
             initialize();
@@ -403,7 +374,7 @@ const DisplayGraph = () => {
           <br />
           <button
             type="button"
-            class={styles.OrangeButton}
+            className={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setBubble();
@@ -416,7 +387,7 @@ const DisplayGraph = () => {
           <br />
           <button
             type="button"
-            class={styles.OrangeButton}
+            className={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setInsert();
@@ -429,7 +400,7 @@ const DisplayGraph = () => {
           <br />
           <button
             type="button"
-            class={styles.OrangeButton}
+            className={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setSelect();
@@ -442,7 +413,7 @@ const DisplayGraph = () => {
           <br />
           <button
             type="button"
-            class={styles.OrangeButton}
+            className={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setQuick();
@@ -455,7 +426,7 @@ const DisplayGraph = () => {
           <br />
           <button
             type="button"
-            class={styles.OrangeButton}
+            className={styles.OrangeButton}
             onClick={() => {
               if (common === false) {
                 setMerge();

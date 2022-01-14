@@ -57,9 +57,9 @@
 .bottom {
   position: relative;
   width: 94vw;
-  height: 2vw;
+  height: 4vh;
   bottom: 0;
-  margin-top: 19vh;
+  margin-top: 15vh;
   z-index: 0;
   left: 0;
   float: left;
@@ -159,7 +159,7 @@ body::-webkit-scrollbar {
   transition-duration: 0.5s;
   border-width: 0px;
   position: absolute;
-  top: 88vh;
+  top: 90vh;
   left: 72vw;
   z-index: 3;
 }

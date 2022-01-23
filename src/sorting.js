@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import React from "react";
 import styles from "./node.module.css";
 import Sketch from "react-p5";
@@ -24,6 +24,9 @@ const DisplayGraph = () => {
 
   const [gheight, setgHeight] = useState(0);
   const [gwidth, setgWidth] = useState(0);
+  useEffect(() => {
+    console.log(gwidth);
+  }, [gwidth]);
 
   const [bubble, setBubble] = useToggle(false);
   const [insert, setInsert] = useToggle(false);
@@ -31,6 +34,7 @@ const DisplayGraph = () => {
   const [quick, setQuick] = useToggle(false);
   const [mergeS, setMerge] = useToggle(false);
   const [common, setCommon] = useToggle(false);
+
   // SETUP CANVAS
   let setup = (p5, canvasParentRef) => {
     setP5(p5);
@@ -43,6 +47,12 @@ const DisplayGraph = () => {
     }
     setStatus(status1);
   };
+
+  // WINDOW RESIZE
+  let windowResize = (p5) => {
+    p5.resizeCanvas(gwidth, gheight);
+  };
+
   // DRAW INSIDE CANVAS, DEFAULT ON LOOP
   let draw = (p5) => {
     // Background of the canvas
@@ -206,7 +216,7 @@ const DisplayGraph = () => {
   }
 
   async function partition(start, end) {
-    for (let i = start; i < end; i++) {
+    for (let i = start; i <= end; i++) {
       // identify the elements being considered currently
       status[i] = 1;
     }
@@ -215,7 +225,7 @@ const DisplayGraph = () => {
     // make pivot index distinct
     status[pivotIndex] = -1;
     let pivotElement = values[end];
-    for (let i = start; i < end; i++) {
+    for (let i = start; i <= end; i++) {
       if (values[i] < pivotElement) {
         await swap(i, pivotIndex);
         status[pivotIndex] = 0;
@@ -224,7 +234,7 @@ const DisplayGraph = () => {
       }
     }
     await swap(end, pivotIndex);
-    for (let i = start; i < end; i++) {
+    for (let i = start; i <= end; i++) {
       // restore original state
       if (i !== pivotIndex) {
         status[i] = -1;
@@ -259,7 +269,7 @@ const DisplayGraph = () => {
     for (curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size) {
       for (left_start = 0; left_start < n - 1; left_start += 2 * curr_size) {
         var right_end = Math.min(left_start + 2 * curr_size - 1, n - 1);
-        for (let i = left_start; i < right_end; i++) {
+        for (let i = left_start; i <= right_end; i++) {
           // identify the elements being considered currently
           status[i] = 1;
         }
@@ -278,12 +288,12 @@ const DisplayGraph = () => {
 
     for (var i = 0; i < subArray1len; i++) {
       L[i] = values[start + i];
-      await sleep(15);
+      await sleep(20);
     }
 
     for (var j = 0; j < subArray2len; j++) {
       R[j] = values[mid + 1 + j];
-      await sleep(15);
+      await sleep(20);
     }
     var i = 0;
     var j = 0;
@@ -293,12 +303,12 @@ const DisplayGraph = () => {
       if (L[i] <= R[j]) {
         status[k] = -1;
         values[k] = L[i];
-        await sleep(15);
+        await sleep(20);
         i++;
       } else {
         status[k] = -1;
         values[k] = R[j];
-        await sleep(15);
+        await sleep(20);
         j++;
       }
 
@@ -308,7 +318,7 @@ const DisplayGraph = () => {
     while (i < subArray1len) {
       status[k] = -1;
       values[k] = L[i];
-      await sleep(15);
+      await sleep(20);
       i++;
       k++;
     }
@@ -316,7 +326,7 @@ const DisplayGraph = () => {
     while (j < subArray2len) {
       status[k] = -1;
       values[k] = R[j];
-      await sleep(15);
+      await sleep(20);
       j++;
       k++;
     }
@@ -341,100 +351,102 @@ const DisplayGraph = () => {
 
   const graphRef = useCallback((node) => {
     if (node !== null) {
-      setgHeight(node.getBoundingClientRect().height);
-      setgWidth(node.getBoundingClientRect().width);
+      setgHeight(Math.floor(node.getBoundingClientRect().height / 8) * 8);
+      setgWidth(Math.floor(node.getBoundingClientRect().width / 8) * 8);
     }
   }, []);
   return (
     <>
-      <div className={styles.grid_container}>
-        <div className={styles.graph_grid}>
+      <div className="row">
+        <div className="col-md-9 mt-5" style={{ paddingLeft: "5%" }}>
           <div className={styles.graph_grid_item} ref={graphRef}>
-            <div>
-              <Sketch setup={setup} draw={draw} className="graph" />
-            </div>
+            <Sketch
+              setup={setup}
+              draw={draw}
+              windowResized={windowResize}
+              className="graph"
+            />
+          </div>
+          <div className="d-flex justify-content-end pt-3">
+            <button
+              type="button"
+              className={styles.ResetButton}
+              onClick={() => {
+                p5.loop();
+                initialize();
+              }}
+            >
+              <img src={reseticon} alt="" />
+            </button>
           </div>
         </div>
-        <button
-          type="button"
-          className={styles.ResetButton}
-          onClick={() => {
-            p5.loop();
-            initialize();
-          }}
-        >
-          <img src={reseticon} alt="" />
-        </button>
+        <div className="col-md-3 my-auto">
+          <div className="d-flex flex-column align-items-center">
+            <div className="py-3 align-items-center">
+              <h1 style={{ fontWeight: 400 }}>Sort Types</h1>
+              <div className={styles.line1}></div>
+            </div>
 
-        <div className={styles.item1}>
-          <h1 style={{ paddingLeft: 10, fontWeight: 400 }}>Sort Types</h1>
+            <button
+              type="button"
+              className={styles.OrangeButton}
+              onClick={() => {
+                if (common === false) {
+                  setBubble();
+                }
+              }}
+            >
+              Bubble Sort
+            </button>
 
-          <div className={styles.line1}></div>
-          <br />
-          <br />
-          <button
-            type="button"
-            className={styles.OrangeButton}
-            onClick={() => {
-              if (common === false) {
-                setBubble();
-              }
-            }}
-          >
-            Bubble Sort
-          </button>
-          <br />
-          <br />
-          <button
-            type="button"
-            className={styles.OrangeButton}
-            onClick={() => {
-              if (common === false) {
-                setInsert();
-              }
-            }}
-          >
-            Insertion Sort
-          </button>
-          <br />
-          <br />
-          <button
-            type="button"
-            className={styles.OrangeButton}
-            onClick={() => {
-              if (common === false) {
-                setSelect();
-              }
-            }}
-          >
-            Selection Sort
-          </button>
-          <br />
-          <br />
-          <button
-            type="button"
-            className={styles.OrangeButton}
-            onClick={() => {
-              if (common === false) {
-                setQuick();
-              }
-            }}
-          >
-            Quick Sort
-          </button>
-          <br />
-          <br />
-          <button
-            type="button"
-            className={styles.OrangeButton}
-            onClick={() => {
-              if (common === false) {
-                setMerge();
-              }
-            }}
-          >
-            Merge Sort
-          </button>
+            <button
+              type="button"
+              className={styles.OrangeButton}
+              onClick={() => {
+                if (common === false) {
+                  setInsert();
+                }
+              }}
+            >
+              Insertion Sort
+            </button>
+
+            <button
+              type="button"
+              className={styles.OrangeButton}
+              onClick={() => {
+                if (common === false) {
+                  setSelect();
+                }
+              }}
+            >
+              Selection Sort
+            </button>
+
+            <button
+              type="button"
+              className={styles.OrangeButton}
+              onClick={() => {
+                if (common === false) {
+                  setQuick();
+                }
+              }}
+            >
+              Quick Sort
+            </button>
+
+            <button
+              type="button"
+              className={styles.OrangeButton}
+              onClick={() => {
+                if (common === false) {
+                  setMerge();
+                }
+              }}
+            >
+              Merge Sort
+            </button>
+          </div>
         </div>
       </div>
     </>

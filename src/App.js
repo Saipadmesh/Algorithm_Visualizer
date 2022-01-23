@@ -57,37 +57,6 @@ function App() {
 
   // FOOTER
 
-  {
-    /* <footer
-              class="bg-dark text-center text-white"
-              style={{ bottom: 0 }}
-            >
-              <div class="container">
-                <div class="row d-flex justify-content-center">
-                  <div class="col-auto">
-                    <div className={styles.bottom}>
-                      <div className={styles.footer}>
-                        A Project By{" "}
-                        <a href="https://linktr.ee/Saipadmesh" target="_blank">
-                          @Saipadmesh
-                        </a>
-                        <br />
-                        <br />
-                        Source Code available on{" "}
-                        <a
-                          href="https://github.com/Saipadmesh/Algorithm_Visualizer"
-                          target="_blank"
-                        >
-                          GitHub
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </footer> */
-  }
-
   return (
     <>
       <div className="container-fluid p-0 w-100 ">
@@ -119,7 +88,11 @@ function App() {
                   <div>
                     <div className={styles.footer}>
                       A Project By{" "}
-                      <a href="https://linktr.ee/Saipadmesh" target="_blank">
+                      <a
+                        href="https://linktr.ee/Saipadmesh"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         @Saipadmesh
                       </a>
                       <br />
@@ -127,6 +100,7 @@ function App() {
                       <a
                         href="https://github.com/Saipadmesh/Algorithm_Visualizer"
                         target="_blank"
+                        rel="noopener noreferrer"
                       >
                         GitHub
                       </a>

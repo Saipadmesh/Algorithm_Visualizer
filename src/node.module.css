@@ -2,17 +2,6 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;500&display=swap");
 
-.grid_container {
-  display: grid;
-  column-gap: 0rem;
-  row-gap: 10px;
-  grid-auto-flow: column;
-  grid-template-columns: 69.7vw auto;
-  grid-template-rows: 20rem;
-  margin-left: 4rem;
-  margin-right: 4rem;
-  margin: 4rem 4rem;
-}
 .line1 {
   height: 3px;
   background: #d0cccc;
@@ -20,48 +9,15 @@
   margin-left: 40%;
 }
 
-.graph_grid {
-  grid-row: 1/ 2;
-  grid-column: 1/2;
-}
 .graph_grid_item {
   height: 40rem;
   width: auto;
-  /* -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  box-shadow: 4px 4px 4px 4px #969696;
-  -webkit-box-shadow: 4px 3px 8px 1px #969696; */
-}
-.item1 {
-  grid-row: 1;
-  grid-column: 3;
-  justify-content: center;
-}
-.item2 {
-  grid-row: 2;
-  grid-column: 3;
 }
 
 .App {
   background-color: #f8f1e5;
-  /* min-height: 72rem;
-  max-height: 72rem; */
-
   border-top-right-radius: 80px;
-  /* border-bottom-right-radius: 80px; */
 }
-
-/* .bottom {
-  position: relative;
-  width: 94vw;
-  height: 4vh;
-  bottom: 0;
-  margin-top: 12vh;
-  z-index: 0;
-  left: 0;
-  float: left;
-} */
 
 .bottom {
   position: absolute;
@@ -72,7 +28,6 @@
 }
 
 .footer {
-  /*top: 40vh;*/
   position: absolute;
   float: left;
   width: 100%;
@@ -90,7 +45,6 @@ a:link {
   color: #ff9d2b;
 }
 
-/* visited link */
 a:visited {
   text-decoration: none;
   color: #ff9d2b;
@@ -172,9 +126,7 @@ body::-webkit-scrollbar {
 .ResetButton:hover {
   background-color: #2f3131;
   border-color: #f9ba32;
-  /*   box-shadow: 0px 0px; */
   color: #f9ba32;
-  /*   background-color: #ce931d;*/
 }
 
 .ResetButton:active {

@@ -4,6 +4,6 @@ A web application to visualize and understand how basic sorting algorithms work.
 
 ### Planned Updates
 
-- Implement more algorithms
-- Make the webpage more responsive
+- Implement more algorithms (Pathfinding algorithms)
+- ~~Make the webpage more responsive~~
 - Add a slider to control the speed of the algorithms

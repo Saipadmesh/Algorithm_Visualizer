@@ -169,7 +169,7 @@ const DisplayGraph = () => {
       while (j >= 0 && values[j] > key) {
         status[i] = 0;
         status[j] = 1;
-        await sleep(8);
+        await sleep(15);
         values[j + 1] = values[j];
         j = j - 1;
         status[j + 1] = -1;
@@ -195,7 +195,7 @@ const DisplayGraph = () => {
           await sleep(1);
           status[j] = -1;
         }
-        await sleep(30);
+        await sleep(15);
 
         await swap(min_idx, i);
         status[i] = -1;
@@ -216,31 +216,32 @@ const DisplayGraph = () => {
   }
 
   async function partition(start, end) {
-    for (let i = start; i <= end; i++) {
-      // identify the elements being considered currently
-      status[i] = 1;
-    }
     // Quicksort algorithm
-    let pivotIndex = start;
-    // make pivot index distinct
-    status[pivotIndex] = -1;
+
+    // k is the min index we start from and indicates the right position of the pivot
+    let k = start - 1;
+    status[k] = 0;
+    status[end] = 0;
     let pivotElement = values[end];
-    for (let i = start; i <= end; i++) {
+    for (let i = start; i <= end - 1; i++) {
+      // yellow to select all elements greater than the pivot element
+      status[i] = 1;
       if (values[i] < pivotElement) {
-        await swap(i, pivotIndex);
-        status[pivotIndex] = 0;
-        pivotIndex++;
-        status[pivotIndex] = -1;
-      }
-    }
-    await swap(end, pivotIndex);
-    for (let i = start; i <= end; i++) {
-      // restore original state
-      if (i !== pivotIndex) {
+        status[k] = -1;
+        k++;
+        status[k] = 0;
+
+        await swap(i, k);
         status[i] = -1;
       }
+      await sleep(10);
     }
-    return pivotIndex;
+
+    status[k] = -1;
+    status[end] = -1;
+    await swap(end, k + 1);
+
+    return k + 1;
   }
 
   // HELPER FUNCTION TO SLOW DOWN SIMULATION FOR QUICK SORT

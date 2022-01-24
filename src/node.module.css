@@ -49,7 +49,7 @@
   max-height: 72rem; */
 
   border-top-right-radius: 80px;
-  border-bottom-right-radius: 80px;
+  /* border-bottom-right-radius: 80px; */
 }
 
 /* .bottom {
@@ -73,13 +73,15 @@
 
 .footer {
   /*top: 40vh;*/
-  position: static;
-  float: inline-start;
+  position: absolute;
+  float: left;
+  width: 100%;
   bottom: 0;
   z-index: 9;
   justify-items: center;
   text-align: center;
   font-size: 22px;
+  margin-bottom: 2%;
   color: white;
 }
 
